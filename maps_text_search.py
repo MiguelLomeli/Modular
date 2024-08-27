@@ -1,5 +1,6 @@
 import pandas as pd
 from google_apis import create_service
+import TripAdvisor_API
 
 client_secret_file = 'client_secret.json'
 API_NAME = 'places'
@@ -165,7 +166,7 @@ def get_atractions(place,focus):
 def complete_list(places_list):
     new_places_list = []
     for place in places_list:
-        place["horario"] = "Todo el dia :D"
+        place["hours"] = TripAdvisor_API.busqueda(place["displayName"]["text"])
         if place not in new_places_list:
             new_places_list.append(place)
     return places_list
