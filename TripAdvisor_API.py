@@ -33,9 +33,9 @@ def details(id):
     API_Data = response.json() 
 
     try:
-        return(API_Data["hours"])
+        return(API_Data["hours"]["weekday_text"],int(API_Data["ranking_data"]["ranking"]))
     except:
-        return("")
+        return("",1000)
     
 
 def busqueda(text_search):
@@ -50,6 +50,8 @@ def busqueda(text_search):
         actualizar_numero_usos()
 
         API_Data = response.json() 
+
+        hours , rank = details(API_Data["data"][0]["location_id"])
             
-        return (details(API_Data["data"][0]["location_id"]))
+        return (hours, rank)
         
