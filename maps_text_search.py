@@ -70,7 +70,7 @@ def get_atractions(pais, estado, municipio, focus,weekday):
             request_body = {
                 "textQuery": query,
                 "regionCode": 'MX',
-                "priceLevels": ["PRICE_LEVEL_MODERATE"]
+                #"priceLevels": ["PRICE_LEVEL_MODERATE"]
             }
             response = service.places().searchText(
                 body=request_body,
@@ -107,7 +107,7 @@ def get_atractions(pais, estado, municipio, focus,weekday):
 def complete_list(places_list):
     new_places_list = []
     for place in places_list:
-        place["hours"],place["ranking"] = TripAdvisor_API.busqueda(place["displayName"]["text"])
+        place["hours"],place["ranking"],place["photo"] = TripAdvisor_API.busqueda(place["displayName"]["text"])
         place["displayName"] = place["displayName"]["text"]
         place["reviews"] = place.get("reviews", [{}])[0].get("text", {}).get("text", "No reviews")
         place["latitude"] = place["location"]["latitude"]

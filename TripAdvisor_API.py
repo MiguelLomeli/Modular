@@ -38,6 +38,24 @@ def details(id):
         return("",1000)
     
 
+def photos(id):
+    url = "https://api.content.tripadvisor.com/api/v1/location/"+id+"/photos?language=es&currency=USD&key="+TripAdvisor_Credentials.get_key()
+
+    headers = {"accept": "application/json"}
+
+    response = requests.get(url, headers=headers)
+
+    actualizar_numero_usos()
+
+    API_Data = response.json() 
+
+    try:
+        ##print(API_Data["images"]["original"]["url"])
+        return(API_Data["data"][1]["images"]["original"]["url"])
+    except:
+        return("")
+    
+
 def busqueda(text_search):
     if verificar_numero_usos():
 
@@ -51,7 +69,11 @@ def busqueda(text_search):
 
         API_Data = response.json() 
 
-        hours , rank = details(API_Data["data"][0]["location_id"])
+        id = API_Data["data"][0]["location_id"]
+
+        hours , rank = details(id)
+
+        photo = photos(id)
             
-        return (hours, rank)
+        return (hours, rank, photo)
         
